@@ -1,11 +1,13 @@
 import {
   getAuthorAction,
+  getAuthorByIdAction,
   postAuthorAction,
   putAuthorAction,
   deleteAuthorAction,
 } from './actionTypes';
 import {
   getAuthor,
+  getAuthorById,
   postAuthor,
   putAuthor,
   deleteAuthor,
@@ -15,6 +17,13 @@ export const getAuthorActionCreator = (token) => {
   return {
     type: getAuthorAction,
     payload: getAuthor(token),
+  };
+};
+
+export const getAuthorByIdActionCreator = (id, token) => {
+  return {
+    type: getAuthorByIdAction,
+    payload: getAuthorById(id, token),
   };
 };
 

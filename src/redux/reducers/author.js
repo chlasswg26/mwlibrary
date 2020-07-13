@@ -1,5 +1,6 @@
 import {
     getAuthorAction,
+    getAuthorByIdAction,
     postAuthorAction,
     putAuthorAction,
     deleteAuthorAction,
@@ -32,6 +33,27 @@ const author = (prevState = initialValue, action) => {
                 errorMessage: action.payload.response.data.data.message,
             };
         case getAuthorAction + fulfilled:
+            return {
+                ...prevState,
+                isLoading: false,
+                isFulfilled: true,
+                response: action.payload.data.data,
+            };
+        case getAuthorByIdAction + pending:
+            return {
+                ...prevState,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false,
+            };
+        case getAuthorByIdAction + rejected:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: true,
+                errorMessage: action.payload.response.data.data.message,
+            };
+        case getAuthorByIdAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,

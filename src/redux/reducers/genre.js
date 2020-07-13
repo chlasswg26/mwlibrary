@@ -1,5 +1,6 @@
 import {
     getGenreAction,
+    getGenreByIdAction,
     postGenreAction,
     putGenreAction,
     deleteGenreAction,
@@ -32,6 +33,27 @@ const genre = (prevState = initialValue, action) => {
                 errorMessage: action.payload.response.data.data.message,
             };
         case getGenreAction + fulfilled:
+            return {
+                ...prevState,
+                isLoading: false,
+                isFulfilled: true,
+                response: action.payload.data.data,
+            };
+        case getGenreByIdAction + pending:
+            return {
+                ...prevState,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false,
+            };
+        case getGenreByIdAction + rejected:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: true,
+                errorMessage: action.payload.response.data.data.message,
+            };
+        case getGenreByIdAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
