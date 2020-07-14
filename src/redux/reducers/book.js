@@ -1,81 +1,129 @@
 import {
-    getAuthorAction,
-    getAuthorByIdAction,
-    postAuthorAction,
-    putAuthorAction,
-    deleteAuthorAction,
+    getBookAction,
+    getBookByIdAction,
+    getBookByUserIdAction,
+    getBookByFilterAction,
+    postBookAction,
+    putBookAction,
+    deleteBookAction,
     pending,
     rejected,
     fulfilled,
 } from '../actions/actionTypes';
+
 const initialValue = {
     response: [],
-    responseAuthorById: {},
+    responseBook: [],
+    responseBookById: {},
+    responseBookByUserId: [],
+    responseBookByFilter: {},
     isLoading: false,
     isRejected: false,
     isFulfilled: false,
-    errorMessage: {},
+    errorMessage: '',
 };
 
-const author = (prevState = initialValue, action) => {
+const book = (prevState = initialValue, action) => {
     switch (action.type) {
-        case getAuthorAction + pending:
+        case getBookAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false,
             };
-        case getAuthorAction + rejected:
+        case getBookAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: true,
                 errorMessage: action.payload.response.data.data.message,
             };
-        case getAuthorAction + fulfilled:
+        case getBookAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isFulfilled: true,
-                response: action.payload.data.data,
+                responseBook: action.payload.data.data,
             };
-        case getAuthorByIdAction + pending:
+        case getBookByIdAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false,
             };
-        case getAuthorByIdAction + rejected:
+        case getBookByIdAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: true,
                 errorMessage: action.payload.response.data.data.message,
             };
-        case getAuthorByIdAction + fulfilled:
+        case getBookByIdAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isFulfilled: true,
-                responseAuthorById: action.payload.data.data,
+                responseBookById: action.payload.data.data,
             };
-        case postAuthorAction + pending:
+        case getBookByUserIdAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false,
             };
-        case postAuthorAction + rejected:
+        case getBookByUserIdAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: true,
                 errorMessage: action.payload.response.data.data.message,
             };
-        case postAuthorAction + fulfilled:
+        case getBookByUserIdAction + fulfilled:
+            return {
+                ...prevState,
+                isLoading: false,
+                isFulfilled: true,
+                responseBookByUserId: action.payload.data.data,
+            };
+        case getBookByFilterAction + pending:
+            return {
+                ...prevState,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false,
+            };
+        case getBookByFilterAction + rejected:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: true,
+                errorMessage: action.payload.response.data.data.message,
+            };
+        case getBookByFilterAction + fulfilled:
+            return {
+                ...prevState,
+                isLoading: false,
+                isFulfilled: true,
+                responseBookByFilter: action.payload.data,
+            };
+        case postBookAction + pending:
+            return {
+                ...prevState,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false,
+            };
+        case postBookAction + rejected:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: true,
+                errorMessage: action.payload.response.data.data.message,
+            };
+        case postBookAction + fulfilled:
             prevState.response.push(action.payload.data.data);
             return {
                 ...prevState,
@@ -83,26 +131,26 @@ const author = (prevState = initialValue, action) => {
                 isFulfilled: true,
                 response: prevState.response,
             };
-        case putAuthorAction + pending:
+        case putBookAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false,
             };
-        case putAuthorAction + rejected:
+        case putBookAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: true,
                 errorMessage: action.payload.response.data.data.message,
-            };
-        case putAuthorAction + fulfilled:
-            const edited = prevState.response.map(author => {
-                if(author.id === action.payload.data.data.id) {
+            }
+        case putBookAction + fulfilled:
+            const edited = prevState.response.map(book => {
+                if (book.id === action.payload.data.data.id) {
                     return action.payload.data.data;
                 }
-                return author;
+                return book;
             });
             return {
                 ...prevState,
@@ -110,22 +158,22 @@ const author = (prevState = initialValue, action) => {
                 isFulfilled: true,
                 response: edited,
             };
-        case deleteAuthorAction + pending:
+        case deleteBookAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false,
             };
-        case deleteAuthorAction + rejected:
+        case deleteBookAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: true,
                 errorMessage: action.payload.response.data.data.message,
             };
-        case deleteAuthorAction + fulfilled:
-            const deleted = prevState.response.filter(author => author.id !== action.payload.data.data.id);
+        case deleteBookAction + fulfilled:
+            const deleted = prevState.response.filter(book => book.id !== action.payload.data.data.id);
             return {
                 ...prevState,
                 isLoading: false,
@@ -139,4 +187,4 @@ const author = (prevState = initialValue, action) => {
     };
 };
 
-export default author;
+export default book;

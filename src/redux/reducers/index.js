@@ -6,10 +6,9 @@ import verify from './verify';
 import login from './login';
 import author from './author';
 import genre from './genre';
-// import books from './books';
-// import status from './status';
-// import borrow from './borrow';
-// import order from './order';
+import book from './book';
+import user from './user';
+import history from './history';
 
 const appReducer = combineReducers({
   register,
@@ -17,10 +16,9 @@ const appReducer = combineReducers({
   login,
   author,
   genre,
-//   books,
-//   status,
-//   borrow,
-//   order,
+  book,
+  user,
+  history,
 });
 
 const rootReducer = (state, action) => {

@@ -10,6 +10,7 @@ import {
 } from '../actions/actionTypes';
 const initialValue = {
     response: [],
+    responseGenreById: {},
     isLoading: false,
     isRejected: false,
     isFulfilled: false,
@@ -58,7 +59,7 @@ const genre = (prevState = initialValue, action) => {
                 ...prevState,
                 isLoading: false,
                 isFulfilled: true,
-                response: action.payload.data.data,
+                responseGenreById: action.payload.data.data,
             };
         case postGenreAction + pending:
             return {
@@ -97,7 +98,7 @@ const genre = (prevState = initialValue, action) => {
                 errorMessage: action.payload.response.data.data.message,
             };
         case putGenreAction + fulfilled:
-            const dataAfterEdit = prevState.response.map(genre => {
+            const edited = prevState.response.map(genre => {
                 if(genre.id === action.payload.data.data.id) {
                     return action.payload.data.data;
                 }
@@ -107,7 +108,7 @@ const genre = (prevState = initialValue, action) => {
                 ...prevState,
                 isLoading: false,
                 isFulfilled: true,
-                response: dataAfterEdit,
+                response: edited,
             };
         case deleteGenreAction + pending:
             return {
@@ -124,12 +125,12 @@ const genre = (prevState = initialValue, action) => {
                 errorMessage: action.payload.response.data.data.message,
             };
         case deleteGenreAction + fulfilled:
-            const dataAfterDelete = prevState.response.filter(genre => genre.id !== action.payload.data.data.id);
+            const deleted = prevState.response.filter(genre => genre.id !== action.payload.data.data.id);
             return {
                 ...prevState,
                 isLoading: false,
                 isFulfilled: true,
-                response: dataAfterDelete,
+                response: deleted,
             };
         default:
             return {
