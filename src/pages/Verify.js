@@ -13,22 +13,14 @@ import {
 } from 'react-bootstrap';
 import Background from '../images/mollie-sivaram-_1gBVgy8gIU-unsplash.png';
 import '../styles/Login.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { verifyActionCreator } from '../redux/actions/verify';
 import { yupResolver } from '@hookform/resolvers';
 import { VerifyCodeSchema } from '../utils/Schema';
 
 const Verify = (props) => {
     const [verifyCode, setVerifyCode] = useState('');
-    const {
-        isLoading,
-        isRejected,
-        isFulfilled,
-        errorMessage,
-    } = useSelector((state) => state.verify);
-    const dispatch = useDispatch();
     const mounted = useRef();
-    const { history } = props;
     const {
         register,
         handleSubmit,
@@ -36,6 +28,8 @@ const Verify = (props) => {
     } = useForm({ resolver: yupResolver(VerifyCodeSchema), });
 
     useEffect(() => {
+        const { isFulfilled } = props.verify;
+        const { history } = props;
         if (!mounted.current) {
             mounted.current = true;
         } else {
@@ -43,7 +37,7 @@ const Verify = (props) => {
                 history.push('/auth/signin');
             }
         }
-    }, [history, isFulfilled]);
+    }, [props]);
 
     const handleChange = (event) => {
         event.preventDefault();
@@ -53,8 +47,15 @@ const Verify = (props) => {
 
     const dispatchVerify = () => {
         const email = localStorage.getItem('currentEmail');
-        dispatch(verifyActionCreator(qs.stringify({ email, verify_code: verifyCode })));
+        const { verifyAction } = props;
+        verifyAction(qs.stringify({ email, verify_code: verifyCode }));
     };
+
+    const {
+        isRejected,
+        isLoading,
+        errorMessage
+    } = props.verify;
 
     return (
         <Fragment>
@@ -137,4 +138,18 @@ const Verify = (props) => {
     );
 };
 
-export default Verify;
+const mapStateToProps = ({ verify }) => {
+    return {
+        verify,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        verifyAction: (data) => {
+            dispatch(verifyActionCreator(data));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Verify);

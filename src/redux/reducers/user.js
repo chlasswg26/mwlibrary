@@ -1,5 +1,4 @@
 import {
-    getUserByIdAction,
     putUserAction,
     pending,
     rejected,
@@ -16,27 +15,6 @@ const initialValue = {
 
 const user = (prevState = initialValue, action) => {
     switch (action.type) {
-        case getUserByIdAction + pending:
-            return {
-                ...prevState,
-                isLoading: true,
-                isRejected: false,
-                isFulfilled: false,
-            };
-        case getUserByIdAction + rejected:
-            return {
-                ...prevState,
-                isLoading: false,
-                isRejected: true,
-                errorMessage: action.payload.response.data.data.message,
-            };
-        case getUserByIdAction + fulfilled:
-            return {
-                ...prevState,
-                isLoading: false,
-                isFulfilled: true,
-                response: action.payload.data.data,
-            };
         case putUserAction + pending:
             return {
                 ...prevState,

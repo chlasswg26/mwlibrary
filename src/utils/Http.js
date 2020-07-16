@@ -28,9 +28,6 @@ export const tokenUser = (body, token) => {
 export const getBook = () => {
   return Axios.get(`${BOOK_ENDPOINT}`);
 };
-export const getBookById = (id) => {
-  return Axios.get(`${BOOK_ENDPOINT}/${id}`);
-};
 export const getBookByUserId = (id, token) => {
   return Axios.get(`${BOOK_ENDPOINT}/user/${id}`, {
     headers: {
@@ -77,13 +74,6 @@ export const getAuthor = (token) => {
     },
   });
 };
-export const getAuthorById = (id, token) => {
-  return Axios.get(`${AUTHOR_ENDPOINT}/${id}`, {
-    headers: {
-      Authorization: token,
-    },
-  });
-};
 export const postAuthor = (body, token) => {
   return Axios.post(`${AUTHOR_ENDPOINT}`, body, {
     headers: {
@@ -113,13 +103,6 @@ export const getGenre = (token) => {
     },
   });
 };
-export const getGenreById = (id, token) => {
-  return Axios.get(`${GENRE_ENDPOINT}/${id}`, {
-    headers: {
-      Authorization: token,
-    },
-  });
-};
 export const postGenre = (body, token) => {
   return Axios.post(`${GENRE_ENDPOINT}`, body, {
     headers: {
@@ -142,13 +125,6 @@ export const deleteGenre = (id, token) => {
   });
 };
 
-export const getUserById = (id, token) => {
-  return Axios.get(`${USER_ENDPOINT}/${id}`, {
-    headers: {
-      Authorization: token,
-    },
-  });
-};
 export const putUser = (id, body, token) => {
   return Axios.put(`${USER_ENDPOINT}/${id}`, body, {
     headers: {
@@ -165,6 +141,7 @@ export const getHistory = (token) => {
   });
 };
 export const getHistoryByUserId = (id, token) => {
+  console.log(id);
   return Axios.get(`${HISTORY_ENDPOINT}/user/${id}`, {
     headers: {
       Authorization: token,

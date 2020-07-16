@@ -11,7 +11,7 @@ import Login from './pages/Login';
 import Token from './pages/Token';
 // import Description from './pages/Description';
 // import Manage from './pages/Manage';
-// import History from './pages/History';
+import History from './pages/History';
 
 const App = () => {
   return (
@@ -26,7 +26,7 @@ const App = () => {
               <Route path='/auth/token' component={Token} />
               {/* <Route path='/description/:id/:books' component={Description} /> */}
               {/* <Route path='/manage' component={Manage} /> */}
-              {/* <Route path='/history' component={History} /> */}
+              <Route path='/history' component={History} />
           </Switch>
         </Router>
       </Provider>

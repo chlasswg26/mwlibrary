@@ -1,6 +1,5 @@
 import {
     getBookAction,
-    getBookByIdAction,
     getBookByUserIdAction,
     getBookByFilterAction,
     postBookAction,
@@ -14,7 +13,6 @@ import {
 const initialValue = {
     response: [],
     responseBook: [],
-    responseBookById: {},
     responseBookByUserId: [],
     responseBookByFilter: {},
     isLoading: false,
@@ -45,27 +43,6 @@ const book = (prevState = initialValue, action) => {
                 isLoading: false,
                 isFulfilled: true,
                 responseBook: action.payload.data.data,
-            };
-        case getBookByIdAction + pending:
-            return {
-                ...prevState,
-                isLoading: true,
-                isRejected: false,
-                isFulfilled: false,
-            };
-        case getBookByIdAction + rejected:
-            return {
-                ...prevState,
-                isLoading: false,
-                isRejected: true,
-                errorMessage: action.payload.response.data.data.message,
-            };
-        case getBookByIdAction + fulfilled:
-            return {
-                ...prevState,
-                isLoading: false,
-                isFulfilled: true,
-                responseBookById: action.payload.data.data,
             };
         case getBookByUserIdAction + pending:
             return {

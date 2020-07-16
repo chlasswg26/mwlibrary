@@ -1,13 +1,11 @@
 import {
   getGenreAction,
-  getGenreByIdAction,
   postGenreAction,
   putGenreAction,
   deleteGenreAction,
 } from './actionTypes';
 import {
     getGenre,
-    getGenreById,
     postGenre,
     putGenre,
     deleteGenre
@@ -17,13 +15,6 @@ export const getGenreActionCreator = (token) => {
   return {
     type: getGenreAction,
     payload: getGenre(token),
-  };
-};
-
-export const getGenreByIdActionCreator = (id, token) => {
-  return {
-    type: getGenreByIdAction,
-    payload: getGenreById(id, token),
   };
 };
 

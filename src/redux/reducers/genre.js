@@ -1,6 +1,5 @@
 import {
     getGenreAction,
-    getGenreByIdAction,
     postGenreAction,
     putGenreAction,
     deleteGenreAction,
@@ -10,7 +9,6 @@ import {
 } from '../actions/actionTypes';
 const initialValue = {
     response: [],
-    responseGenreById: {},
     isLoading: false,
     isRejected: false,
     isFulfilled: false,
@@ -39,27 +37,6 @@ const genre = (prevState = initialValue, action) => {
                 isLoading: false,
                 isFulfilled: true,
                 response: action.payload.data.data,
-            };
-        case getGenreByIdAction + pending:
-            return {
-                ...prevState,
-                isLoading: true,
-                isRejected: false,
-                isFulfilled: false,
-            };
-        case getGenreByIdAction + rejected:
-            return {
-                ...prevState,
-                isLoading: false,
-                isRejected: true,
-                errorMessage: action.payload.response.data.data.message,
-            };
-        case getGenreByIdAction + fulfilled:
-            return {
-                ...prevState,
-                isLoading: false,
-                isFulfilled: true,
-                responseGenreById: action.payload.data.data,
             };
         case postGenreAction + pending:
             return {

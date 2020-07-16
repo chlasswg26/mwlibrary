@@ -1,41 +1,58 @@
-import React from 'react';
+import React, {
+    Fragment,
+    useEffect,
+    useRef,
+} from 'react';
 import qs from 'querystring';
-import { useSelector, useDispatch, } from 'react-redux';
+import { Spinner } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { tokenActionCreator } from '../redux/actions/login';
 
 const Token = (props) => {
-    const {
-        isFulfilled,
-        token,
-        response
-    } = useSelector((state) => state.login);
-    const dispatch = useDispatch();
-    const mounted = React.useRef();
+    const mounted = useRef();
+    const { tokenAction, login } = props;
+    const { isFulfilled, token, response } = login;
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!mounted.current) {
             mounted.current = true;
         } else {
-            const { history } = props;
-
             if (isFulfilled) {
+                const { id, role, name, email } = response;
                 localStorage.setItem('token', token);
-                localStorage.setItem('id', response.id);
-                localStorage.setItem('role', btoa(response.role));
-                localStorage.setItem('name', response.name);
-                localStorage.setItem('email', response.email);
-                history.push(localStorage.getItem('lastPage'));
+                localStorage.setItem('id', id);
+                localStorage.setItem('role', btoa(role));
+                localStorage.setItem('name', name);
+                localStorage.setItem('email', email);
+                props.history.push('/history');
             }
         }
     }, [props, isFulfilled, response, token]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const { token, refreshToken } = response;
-        dispatch(tokenActionCreator(qs.stringify({ token: refreshToken }), token));
-        localStorage.setItem('token', refreshToken);
-    }, [dispatch, response]);
+        tokenAction(qs.stringify({ token: refreshToken }), token);
+    }, [response, tokenAction]);
 
-    return null;
+    return (
+        <Fragment>
+            <Spinner animation='grow' variant='info' />
+        </Fragment>
+    );
 };
 
-export default Token;
+const mapStateToProps = ({ login }) => {
+    return {
+        login,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        tokenAction: (body, token) => {
+            dispatch(tokenActionCreator(body, token));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Token);

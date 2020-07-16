@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap';
 import Background from '../images/mollie-sivaram-_1gBVgy8gIU-unsplash.png';
 import '../styles/Login.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { registerActionCreator } from '../redux/actions/register';
 import { yupResolver } from '@hookform/resolvers';
 import { SignUpSchema } from '../utils/Schema';
@@ -24,13 +24,6 @@ const Register = (props) => {
     const [password, setPassword] = useState('');
     // eslint-disable-next-line
     const [repeatPassword, setRepeatPassword] = useState('');
-    const {
-        isLoading,
-        isRejected,
-        isFulfilled,
-        errorMessage,
-    } = useSelector((state) => state.register);
-    const dispatch = useDispatch();
     const mounted = useRef();
     const { history } = props;
     const {
@@ -40,6 +33,8 @@ const Register = (props) => {
     } = useForm({ resolver: yupResolver(SignUpSchema), });
 
     useEffect(() => {
+        const { isFulfilled } = props.register;
+        const { history } = props;
         if (!mounted.current) {
             mounted.current = true;
         } else {
@@ -48,7 +43,7 @@ const Register = (props) => {
                 history.push('/auth/verify');
             }
         }
-    }, [history, isFulfilled, email]);
+    }, [props, email]);
 
     const handleChange = (event) => {
         event.preventDefault();
@@ -72,8 +67,15 @@ const Register = (props) => {
     };
 
     const dispatchRegister = () => {
-        dispatch(registerActionCreator(qs.stringify({ name, email, password, role: '1' })));
+        const { registerAction } = props;
+        registerAction(qs.stringify({ name, email, password, role: '1' }));
     };
+
+    const {
+        isRejected,
+        isLoading,
+        errorMessage
+    } = props.register;
 
     return (
         <Fragment>
@@ -211,4 +213,18 @@ const Register = (props) => {
     );
 };
 
-export default Register;
+const mapStateToProps = ({ register }) => {
+    return {
+        register,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        registerAction: (data) => {
+            dispatch(registerActionCreator(data));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap';
 import Background from '../images/mollie-sivaram-_1gBVgy8gIU-unsplash.png';
 import '../styles/Login.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { loginActionCreator } from '../redux/actions/login';
 import { yupResolver } from '@hookform/resolvers';
 import { SignInSchema } from '../utils/Schema';
@@ -21,15 +21,7 @@ import { SignInSchema } from '../utils/Schema';
 const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {
-        isLoading,
-        isRejected,
-        isFulfilled,
-        errorMessage,
-    } = useSelector((state) => state.login);
-    const dispatch = useDispatch();
     const mounted = useRef();
-    const { history } = props;
     const {
         register,
         handleSubmit,
@@ -37,6 +29,8 @@ const Login = (props) => {
     } = useForm({ resolver: yupResolver(SignInSchema), });
 
     useEffect(() => {
+        const { history } = props;
+        const { isFulfilled } = props.login;
         if (!mounted.current) {
             mounted.current = true;
         } else {
@@ -45,7 +39,7 @@ const Login = (props) => {
                 history.push('/auth/token');
             }
         }
-    }, [history, isFulfilled]);
+    }, [props]);
 
     const handleChange = (event) => {
         event.preventDefault();
@@ -58,8 +52,19 @@ const Login = (props) => {
     };
 
     const dispatchLogin = () => {
-        dispatch(loginActionCreator(qs.stringify({ email, password })));
+        localStorage.clear();
+        const { loginAction } = props;
+        loginAction(qs.stringify({
+            email,
+            password,
+        }));
     };
+
+    const {
+        isRejected,
+        isLoading,
+        errorMessage
+    } = props.login;
 
     return (
         <Fragment>
@@ -154,7 +159,7 @@ const Login = (props) => {
                                 variant='light'
                                 type='button'
                                 onClick={() => {
-                                    history.push('/auth/signup')
+                                    props.history.push('/auth/signup')
                                 }}
                             >
                                 Sign up
@@ -167,4 +172,18 @@ const Login = (props) => {
     );
 };
 
-export default Login;
+const mapStateToProps = ({ login }) => {
+    return {
+        login,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginAction: (data) => {
+            dispatch(loginActionCreator(data));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
