@@ -1,4 +1,5 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import qs from 'querystring';
 import { useForm } from 'react-hook-form';
 import {
@@ -21,25 +22,25 @@ import { SignInSchema } from '../utils/Schema';
 const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const mounted = useRef();
     const {
         register,
         handleSubmit,
         errors,
     } = useForm({ resolver: yupResolver(SignInSchema), });
+    const {
+        isFulfilled,
+        isRejected,
+        isLoading,
+        errorMessage
+    } = props.login;
+    const { history } = props;
 
     useEffect(() => {
-        const { history } = props;
-        const { isFulfilled } = props.login;
-        if (!mounted.current) {
-            mounted.current = true;
-        } else {
+        if (isFulfilled) {
             localStorage.setItem('lastPage', '/');
-            if (isFulfilled) {
-                history.push('/auth/token');
-            }
+            history.push('/auth/token');
         }
-    }, [props]);
+    }, [isFulfilled, history]);
 
     const handleChange = (event) => {
         event.preventDefault();
@@ -60,11 +61,11 @@ const Login = (props) => {
         }));
     };
 
-    const {
-        isRejected,
-        isLoading,
-        errorMessage
-    } = props.login;
+    if (localStorage.getItem('token')) {
+      return (
+        <Redirect to='/' />
+      );
+    }
 
     return (
         <Fragment>
@@ -159,7 +160,7 @@ const Login = (props) => {
                                 variant='light'
                                 type='button'
                                 onClick={() => {
-                                    props.history.push('/auth/signup')
+                                    history.push('/auth/signup')
                                 }}
                             >
                                 Sign up

@@ -12,11 +12,9 @@ import { yupResolver } from '@hookform/resolvers';
 import { AddGenreSchema } from '../utils/Schema';
 
 const ModalEditGenre = (props) => {
-    const [name, setName] = useState('');
+    const [name, setName] = useState(props.genre);
     const [show, setShow] = useState(false);
-    const {
-        token,
-    } = useSelector((state) => state.login);
+    const token = localStorage.getItem('token');
     const {
         response,
     } = useSelector((state) => state.genre);
@@ -31,6 +29,7 @@ const ModalEditGenre = (props) => {
         event.preventDefault();
         const { name, value } = event.target;
         name === 'name' ? setName(value) : setName(response.name);
+        setShow(true);
     };
 
     const dispatchPutGenre = () => {
@@ -41,11 +40,11 @@ const ModalEditGenre = (props) => {
     
     return (
         <Fragment>
-            <Button variant='primary' size='sm' onClick={setShow(true)}>
+            <Button variant='primary' size='sm' onClick={() => setShow(true)}>
           Edit
         </Button>
 
-        <Modal show={show} onHide={setShow(false)} size='sm'>
+        <Modal show={show} onHide={() => setShow(false)} size='sm'>
           <Modal.Header closeButton>
             <Form onSubmit={handleSubmit(dispatchPutGenre)}>
               <Form.Group>
@@ -68,7 +67,7 @@ const ModalEditGenre = (props) => {
                 size='sm'
                 style={{ marginLeft: '200px' }}
               >
-                Edit
+                Submit
               </Button>
             </Form>
           </Modal.Header>

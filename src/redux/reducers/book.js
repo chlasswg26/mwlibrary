@@ -14,7 +14,8 @@ const initialValue = {
     response: [],
     responseBook: [],
     responseBookByUserId: [],
-    responseBookByFilter: {},
+    responseBookByFilter: [],
+    pagination: [],
     isLoading: false,
     isRejected: false,
     isFulfilled: false,
@@ -68,23 +69,17 @@ const book = (prevState = initialValue, action) => {
         case getBookByFilterAction + pending:
             return {
                 ...prevState,
-                isLoading: true,
-                isRejected: false,
-                isFulfilled: false,
             };
         case getBookByFilterAction + rejected:
             return {
                 ...prevState,
-                isLoading: false,
-                isRejected: true,
                 errorMessage: action.payload.response.data.data.message,
             };
         case getBookByFilterAction + fulfilled:
             return {
                 ...prevState,
-                isLoading: false,
-                isFulfilled: true,
-                responseBookByFilter: action.payload.data,
+                responseBookByFilter: action.payload.data.data,
+                pagination: action.payload.data.pagination,
             };
         case postBookAction + pending:
             return {

@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
+import { Redirect } from 'react-router-dom';
 import qs from 'querystring';
 import { useForm } from 'react-hook-form';
 import {
@@ -56,6 +57,16 @@ const Verify = (props) => {
         isLoading,
         errorMessage
     } = props.verify;
+
+    if (localStorage.getItem('token')) {
+      return (
+        <Redirect to='/' />
+      );
+    } else if (!localStorage.getItem('currentEmail')) {
+      return (
+        <Redirect to='/auth/signup' />
+      );
+    }
 
     return (
         <Fragment>

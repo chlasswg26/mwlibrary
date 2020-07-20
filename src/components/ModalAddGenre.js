@@ -6,46 +6,46 @@ import {
     Form,
     Button,
 } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { postGenreActionCreator } from '../redux/actions/genre';
 import { yupResolver } from '@hookform/resolvers';
 import { AddGenreSchema } from '../utils/Schema';
 
-const ModalAddGenre = () => {
-    const [name, setName] = useState('');
-    const [show, setShow] = useState(false);
-    const [validated, setValidated] = useState(false);
-    const {
-        token,
-    } = useSelector((state) => state.login);
-    const dispatch = useDispatch();
+const ModalAddGenre = (props) => {
+    const [state, setState] = useState({
+      name: '',
+      show: false,
+      validated: false,
+    });
     const {
         register,
         handleSubmit,
         errors,
     } = useForm({ resolver: yupResolver(AddGenreSchema), });
+    const token = localStorage.getItem('token');
 
     const handleChange = (event) => {
         event.preventDefault();
-        const { name, value } = event.target;
-        name === 'name' ? setName(value) : setName('');
+        setState({ name: event.target.value, show: true, });
     };
 
     const dispatchPostGenre = () => {
-        setValidated(true);
-        dispatch(postGenreActionCreator(qs.stringify({ name }), token));
-        setShow(false);
+      const { postGenreAction } = props;
+      const { name } = state;
+      postGenreAction(qs.stringify({ name, }), token);
+      setState({ validated: true, });
     };
     
     return (
         <Fragment>
-            <Button variant='primary' size='sm' onClick={setShow(true)}>
-          Add
+            <Button variant='primary' size='sm' onClick={() => setState({ show: true, validated: false, })}>
+          Add New Genre
         </Button>
 
-        <Modal show={show} onHide={setShow(false)} size='sm'>
-          <Modal.Header closeButton>
-            <Form onSubmit={handleSubmit(dispatchPostGenre)} validated={validated} noValidate>
+        <Modal show={state.show} onHide={() => setState({ show: false })} backdrop='static' keyboard={false} size='sm'>
+          <Modal.Header closeButton />
+          <Modal.Body>
+            <Form onSubmit={handleSubmit(dispatchPostGenre)} validated={state.validated} noValidate>
               <Form.Group>
                 <Form.Control
                   type='text'
@@ -54,6 +54,7 @@ const ModalAddGenre = () => {
                   ref={register}
                   onChange={handleChange}
                   isInvalid={errors.name}
+                  required
                 />
                     { errors.name &&
                         <Form.Control.Feedback type='invalid'>{ errors.name.message }</Form.Control.Feedback>
@@ -65,13 +66,21 @@ const ModalAddGenre = () => {
                 size='sm'
                 style={{ marginLeft: '200px' }}
               >
-                Add
+                Submit
               </Button>
             </Form>
-          </Modal.Header>
+          </Modal.Body>
         </Modal>
         </Fragment>
     );
 };
 
-export default ModalAddGenre;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    postGenreAction: (body, token) => {
+      dispatch(postGenreActionCreator(body, token));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ModalAddGenre);

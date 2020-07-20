@@ -36,13 +36,11 @@ export const getBookByUserId = (id, token) => {
   });
 };
 export const getBookByFilter = (token, params) => {
-  return Axios.post(`${BOOK_ENDPOINT}`, {
+  return Axios.post(`${BOOK_ENDPOINT}/filter`, null, {
     headers: {
       Authorization: token,
     },
-    params: {
-      params
-    },
+    params,
   });
 };
 export const postBook = (body, token) => {
@@ -141,7 +139,6 @@ export const getHistory = (token) => {
   });
 };
 export const getHistoryByUserId = (id, token) => {
-  console.log(id);
   return Axios.get(`${HISTORY_ENDPOINT}/user/${id}`, {
     headers: {
       Authorization: token,

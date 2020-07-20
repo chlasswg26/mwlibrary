@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
+import { Redirect } from 'react-router-dom';
 import qs from 'querystring';
 import { useForm } from 'react-hook-form';
 import {
@@ -76,6 +77,12 @@ const Register = (props) => {
         isLoading,
         errorMessage
     } = props.register;
+
+    if (localStorage.getItem('token')) {
+      return (
+        <Redirect to='/' />
+      );
+    }
 
     return (
         <Fragment>

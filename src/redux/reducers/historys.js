@@ -15,7 +15,7 @@ const initialValue = {
     errorMessage: '',
 };
 
-const history = (prevState = initialValue, action) => {
+const historys = (prevState = initialValue, action) => {
     switch (action.type) {
         case getHistoryAction + pending:
             return {
@@ -88,4 +88,4 @@ const history = (prevState = initialValue, action) => {
     };
 };
 
-export default history;
+export default historys;

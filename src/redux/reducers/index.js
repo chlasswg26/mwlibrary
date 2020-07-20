@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { logoutAction } from '../actions/actionTypes';
 
 import register from './register';
 import verify from './verify';
@@ -8,9 +7,9 @@ import author from './author';
 import genre from './genre';
 import book from './book';
 import user from './user';
-import history from './history';
+import historys from './historys';
 
-const appReducer = combineReducers({
+const rootReducer = combineReducers({
   register,
   verify,
   login,
@@ -18,14 +17,7 @@ const appReducer = combineReducers({
   genre,
   book,
   user,
-  history,
+  historys,
 });
-
-const rootReducer = (state, action) => {
-  if (action.type === logoutAction) {
-    state = null;
-  }
-  return appReducer(state, action);
-};
 
 export default rootReducer;
