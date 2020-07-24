@@ -6,7 +6,7 @@ import {
     Form,
     Button,
 } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { postAuthorActionCreator } from '../redux/actions/author';
 import { yupResolver } from '@hookform/resolvers';
 import { AddAuthorSchema } from '../utils/Schema';
@@ -15,9 +15,7 @@ const ModalAddAuthor = () => {
     const [name, setName] = useState('');
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
-    const {
-        token,
-    } = useSelector((state) => state.login);
+    const token = localStorage.getItem('token');
     const dispatch = useDispatch();
     const {
         register,
@@ -29,6 +27,7 @@ const ModalAddAuthor = () => {
         event.preventDefault();
         const { name, value } = event.target;
         name === 'name' ? setName(value) : setName('');
+        setShow(true);
     };
 
     const dispatchPostAuthor = () => {
@@ -39,12 +38,13 @@ const ModalAddAuthor = () => {
     
     return (
         <Fragment>
-            <Button variant='primary' size='sm' onClick={setShow(true)}>
-          Add
+            <Button variant='primary' size='sm' onClick={() => setShow(true)}>
+          Add Author
         </Button>
 
-        <Modal show={show} onHide={setShow(false)} size='sm'>
-          <Modal.Header closeButton>
+        <Modal animation={false} transition={null} show={show} onHide={() => setShow(false)} backdrop='static' keyboard={false} size='sm'>
+          <Modal.Header closeButton />
+          <Modal.Body>
             <Form onSubmit={handleSubmit(dispatchPostAuthor)} validated={validated} noValidate>
               <Form.Group>
                 <Form.Control
@@ -65,10 +65,10 @@ const ModalAddAuthor = () => {
                 size='sm'
                 style={{ marginLeft: '200px' }}
               >
-                Add
+                Submit
               </Button>
             </Form>
-          </Modal.Header>
+          </Modal.Body>
         </Modal>
         </Fragment>
     );

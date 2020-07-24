@@ -1,0 +1,209 @@
+@font-face {
+  font-family: Airbnb;
+  src: url(../fonts/AirbnbCerealMedium.woff);
+}
+
+.value {
+  margin-bottom: 600px;
+}
+
+.top-cover {
+  object-fit: cover;
+  width: 100vw;
+  height: 60vh;
+}
+
+.cover {
+  position: absolute;
+  width: 13vw;
+  height: 20vw;
+  left: 77vw;
+  top: 40vh;
+
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.back-button {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  left: 2vw;
+  top: 3vh;
+  cursor: pointer;
+}
+
+.badge-novel {
+  position: absolute;
+  width: auto;
+  min-width: 95px;
+  padding-left: 8px;
+  padding-right: 8px;
+  height: 30px;
+  left: 6vw;
+  top: 68.3vh;
+
+  font-size: 17px;
+  font-family: Airbnb;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 29px;
+  color: #ffffff;
+
+  background: #b2b6bb;
+  border-radius: 15px;
+}
+
+.status {
+  position: absolute;
+  width: 278px;
+  height: 51px;
+  left: 57vw;
+  top: 74vh;
+
+  font-family: Airbnb;
+  font-size: 30px;
+  line-height: 39px;
+
+  color: #99d815;
+}
+
+.status-red {
+  position: absolute;
+  width: 278px;
+  height: 51px;
+  left: 57vw;
+  top: 74vh;
+
+  font-family: Airbnb;
+  font-size: 30px;
+  line-height: 39px;
+
+  color: red;
+}
+
+.detail {
+  position: absolute;
+
+  height: 342px;
+  left: 6vw;
+  top: 72vh;
+}
+.title {
+  width: 600px;
+  font-family: Airbnb;
+  font-size: 50px;
+  line-height: 65px;
+
+  color: #000000;
+}
+
+.author {
+  width: 200px;
+  text-align: justify;
+  font-family: Airbnb;
+  font-size: 26px;
+  line-height: 30px;
+
+  color: #000000;
+}
+
+.description {
+  width: 824px;
+  text-align: justify;
+  font-family: Airbnb;
+  font-size: 20px;
+  line-height: 26px;
+
+  color: #000000;
+}
+
+.edit {
+  position: absolute;
+  width: 2vw;
+  height: 2vh;
+  left: 83vw;
+  top: 2.5vh;
+  cursor: pointer;
+
+  font-family: Airbnb;
+  font-size: 30px;
+  line-height: 39px;
+
+  color: #000000;
+}
+
+.delete {
+  position: absolute;
+  width: 2vw;
+  height: 2vh;
+  left: 88.5vw;
+  top: 2.5vh;
+  cursor: pointer;
+
+  font-family: Airbnb;
+  font-size: 30px;
+  line-height: 39px;
+
+  color: #000000;
+}
+
+.badge-borrow {
+  position: absolute;
+  width: 240px;
+  height: 74px;
+  left: 70vw;
+  top: 115vh;
+  cursor: pointer;
+
+  font-size: 30px;
+  font-family: Airbnb;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 70px;
+  color: #ffffff;
+
+  background: #fbcc38;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+.badge-return {
+  position: absolute;
+  width: 240px;
+  height: 74px;
+  left: 70vw;
+  top: 115vh;
+
+  cursor: pointer;
+  font-size: 30px;
+  font-family: Airbnb;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 70px;
+  color: #ffffff;
+
+  background: #ff0000;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+.badge-borrow-disabled {
+  position: absolute;
+  width: 240px;
+  height: 74px;
+  left: 70vw;
+  top: 115vh;
+  opacity: 0.4;
+
+  font-size: 30px;
+  font-family: Airbnb;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 70px;
+  color: #ffffff;
+
+  background: #fbcc38;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}

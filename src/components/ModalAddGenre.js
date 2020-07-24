@@ -39,10 +39,10 @@ const ModalAddGenre = (props) => {
     return (
         <Fragment>
             <Button variant='primary' size='sm' onClick={() => setState({ show: true, validated: false, })}>
-          Add New Genre
+          Add Genre
         </Button>
 
-        <Modal show={state.show} onHide={() => setState({ show: false })} backdrop='static' keyboard={false} size='sm'>
+        <Modal animation={false} transition={null} show={state.show} onHide={() => setState({ show: false })} backdrop='static' keyboard={false} size='sm'>
           <Modal.Header closeButton />
           <Modal.Body>
             <Form onSubmit={handleSubmit(dispatchPostGenre)} validated={state.validated} noValidate>

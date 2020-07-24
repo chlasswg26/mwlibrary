@@ -52,7 +52,7 @@ const CarouselLayout = (props) => {
                                 objectFit: 'cover',
                                 cursor: 'pointer',
                             }}
-                            onClick={() => props.toDescription(data.id)}
+                            onClick={() => props.history.push(`/description/${data.id}`)}
                         />
                     ))
                     }

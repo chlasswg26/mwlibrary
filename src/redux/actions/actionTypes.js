@@ -19,6 +19,7 @@ export const putGenreAction = 'PUT_GENRE';
 export const deleteGenreAction = 'DELETE_GENRE';
 
 export const getBookAction = 'GET_BOOK';
+export const getBookByIdAction = 'GET_BOOK_BY_ID';
 export const getBookByUserIdAction = 'GET_BOOK_BY_USER_ID';
 export const getBookByFilterAction = 'GET_BOOK_BY_FILTER';
 export const postBookAction = 'POST_BOOK';

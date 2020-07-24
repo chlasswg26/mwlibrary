@@ -15,10 +15,10 @@ const NavbarLayout = (props) => {
     return (
         <Fragment>
             <Navbar
-                style={{ backgroundColor: '#FFFFFF', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.25)' }}
+                style={{ backgroundColor: '#FFFFFF', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.25)', marginRight: 0}}
                 variant='light'
-                expand='xl'
                 sticky='top'
+                expand='xl'
             >
                 <Navbar.Brand
                     onClick={props.toHome}

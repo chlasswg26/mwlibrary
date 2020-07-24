@@ -12,11 +12,9 @@ import { yupResolver } from '@hookform/resolvers';
 import { AddAuthorSchema } from '../utils/Schema';
 
 const ModalEditAuthor = (props) => {
-    const [name, setName] = useState('');
+    const [name, setName] = useState(props.author);
     const [show, setShow] = useState(false);
-    const {
-        token,
-    } = useSelector((state) => state.login);
+    const token = localStorage.getItem('token');
     const {
         response,
     } = useSelector((state) => state.author);
@@ -31,6 +29,7 @@ const ModalEditAuthor = (props) => {
         event.preventDefault();
         const { name, value } = event.target;
         name === 'name' ? setName(value) : setName(response.name);
+        setShow(true);
     };
 
     const dispatchPutAuthor = () => {
@@ -41,12 +40,13 @@ const ModalEditAuthor = (props) => {
     
     return (
         <Fragment>
-            <Button variant='primary' size='sm' onClick={setShow(true)}>
+            <Button variant='primary' size='sm' onClick={() => setShow(true)}>
           Edit
         </Button>
 
-        <Modal show={show} onHide={setShow(false)} size='sm'>
-          <Modal.Header closeButton>
+        <Modal animation={false} transition={null} show={show} onHide={() => setShow(false)} backdrop='static' keyboard={false} size='sm'>
+          <Modal.Header closeButton />
+          <Modal.Body>
             <Form onSubmit={handleSubmit(dispatchPutAuthor)}>
               <Form.Group>
                 <Form.Control
@@ -68,10 +68,10 @@ const ModalEditAuthor = (props) => {
                 size='sm'
                 style={{ marginLeft: '200px' }}
               >
-                Edit
+                Submit
               </Button>
             </Form>
-          </Modal.Header>
+          </Modal.Body>
         </Modal>
         </Fragment>
     );

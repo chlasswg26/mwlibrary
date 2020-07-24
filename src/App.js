@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import Verify from './pages/Verify';
 import Login from './pages/Login';
 import Token from './pages/Token';
-// import Description from './pages/Description';
+import Description from './pages/Description';
 import Manage from './pages/Manage';
 import History from './pages/History';
 import MyBook from './pages/Book';
@@ -25,7 +25,7 @@ const App = () => {
               <Route path='/auth/verify' component={Verify} />
               <Route path='/auth/signin' component={Login} />
               <Route path='/auth/token' component={Token} />
-              {/* <Route path='/description/:id/:books' component={Description} /> */}
+              <Route path='/description/:id' component={Description} />
               <Route path='/manage' component={Manage} />
               <Route path='/history' component={History} />
               <Route path='/book' component={MyBook} />

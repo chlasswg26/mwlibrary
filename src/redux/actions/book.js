@@ -1,5 +1,6 @@
 import {
     getBookAction,
+    getBookByIdAction,
     getBookByUserIdAction,
     getBookByFilterAction,
     postBookAction,
@@ -8,6 +9,7 @@ import {
 } from './actionTypes';
 import {
     getBook,
+    getBookById,
     getBookByUserId,
     getBookByFilter,
     postBook,
@@ -19,6 +21,13 @@ export const getBookActionCreator = () => {
     return {
         type: getBookAction,
         payload: getBook(),
+    };
+};
+
+export const getBookByIdActionCreator = (id, token) => {
+    return {
+        type: getBookByIdAction,
+        payload: getBookById(id, token),
     };
 };
 

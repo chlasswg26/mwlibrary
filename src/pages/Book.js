@@ -135,6 +135,8 @@ const Book = (props) => {
                             </Button>
                         </td>
                         <Modal
+                            animation={false}
+                            transition={null}
                             show={show}
                             onHide={handleClose}
                             backdrop='static'
@@ -144,17 +146,17 @@ const Book = (props) => {
                             <Modal.Title>Return Book?</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                            Are you sure want return the book of {data.title}
+                            Are you sure want to return the book of {data.title}
                             </Modal.Body>
                             <Modal.Footer>
                             <Button variant='secondary' onClick={handleClose}>
-                                Close
+                                No
                             </Button>
                             <Button type='submit' variant='primary' onClick={() => {
                                 handleClose();
                                 dispatchReturnBook(data.id, data.id_user);
                             }}>
-                                Continue
+                                Yes
                             </Button>
                             </Modal.Footer>
                         </Modal>

@@ -5,15 +5,19 @@ import {
     Col,
     Table,
 } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
 import NavbarLayout from '../components/NavbarLayout';
 import { connect } from 'react-redux';
 import { logoutActionCreator } from '../redux/actions/logout';
 import { getAuthorActionCreator } from '../redux/actions/author';
 import { getGenreActionCreator } from '../redux/actions/genre';
 
+import ModalAddAuthor from '../components/ModalAddAuthor';
+import ModalEditAuthor from '../components/ModalEditAuthor';
+import ModalDeleteAuthor from '../components/ModalDeleteAuthor';
+
 import ModalAddGenre from '../components/ModalAddGenre';
 import ModalEditGenre from '../components/ModalEditGenre';
+import ModalDeleteGenre from '../components/ModalDeleteGenre';
 
 const Manage = (props) => {
     const token = localStorage.getItem('token');
@@ -22,9 +26,7 @@ const Manage = (props) => {
     useEffect(() => {
         const { author, genre } = props;
         if (role === '1') {
-            return (
-                <Redirect to='/' />
-            );
+            props.history.push('/');
         }
         if (!author.isFulfilled) {
             props.getAuthorAction(token);
@@ -32,6 +34,8 @@ const Manage = (props) => {
         if (!genre.isFulfilled) {
             props.getGenreAction(token);
         }
+
+    // eslint-disable-next-line
     }, []);
 
     const dispatchLogout = async () => {
@@ -46,7 +50,7 @@ const Manage = (props) => {
             <NavbarLayout
                 toWhere={dispatchLogout}
                 search={null}
-                toHome={() => <Redirect to='/' />}
+                toHome={() => props.history.push('/')}
                 toManage={() => props.history.push('/manage')}
                 toHistory={() => props.history.push('/history')}
                 toMyBook={() => props.history.push('/book')}
@@ -62,7 +66,7 @@ const Manage = (props) => {
                                         Author's
                                     </th>
                                     <th>
-                                        {/* <ModalAddAuthor key={author} /> */}
+                                        <ModalAddAuthor />
                                     </th>
                                 </tr>
                             </thead>
@@ -71,13 +75,13 @@ const Manage = (props) => {
                                     <tr key={key}>
                                         <td>{author.name}</td>
                                         <td>
-                                            {/* <ModalEditAuthor
+                                            <ModalEditAuthor
                                                 id={author.id}
-                                                author={author.author}
-                                            /> */}
+                                                author={author.name}
+                                            />
                                         </td>
                                         <td>
-                                            {/* <ModalDeleteAuthor id={author.id} /> */}
+                                            <ModalDeleteAuthor id={author.id} />
                                         </td>
                                     </tr>
                                 ))}
@@ -104,7 +108,7 @@ const Manage = (props) => {
                                             <ModalEditGenre id={genre.id} genre={genre.name} />
                                         </td>
                                         <td>
-                                            {/* <ModalDeleteGenre id={genre.id} /> */}
+                                            <ModalDeleteGenre id={genre.id} />
                                         </td>
                                     </tr>
                                 ))}

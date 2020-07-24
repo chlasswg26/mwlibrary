@@ -44,8 +44,9 @@ const ModalEditGenre = (props) => {
           Edit
         </Button>
 
-        <Modal show={show} onHide={() => setShow(false)} size='sm'>
-          <Modal.Header closeButton>
+        <Modal animation={false} transition={null} show={show} onHide={() => setShow(false)} backdrop='static' keyboard={false} size='sm'>
+          <Modal.Header closeButton />
+          <Modal.Body>
             <Form onSubmit={handleSubmit(dispatchPutGenre)}>
               <Form.Group>
                 <Form.Control
@@ -70,7 +71,7 @@ const ModalEditGenre = (props) => {
                 Submit
               </Button>
             </Form>
-          </Modal.Header>
+          </Modal.Body>
         </Modal>
         </Fragment>
     );

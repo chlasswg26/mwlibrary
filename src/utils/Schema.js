@@ -16,6 +16,13 @@ export const SignInSchema = Yup.object().shape({
     password: Yup.string().required().min(8),
 });
 
+export const AddBookSchema = Yup.object().shape({
+    title: Yup.string().required(),
+    description: Yup.string().required(),
+    author: Yup.string().required(),
+    genre: Yup.string().required(),
+});
+
 export const AddAuthorSchema = Yup.object().shape({
     name: Yup.string().required().max(50),
 });

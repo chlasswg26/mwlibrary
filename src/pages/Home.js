@@ -17,8 +17,7 @@ import {
     getBookByFilterActionCreator,
  } from '../redux/actions/book';
 import { logoutActionCreator } from '../redux/actions/logout';
-import { getAuthorActionCreator } from '../redux/actions/author';
-import { getGenreActionCreator } from '../redux/actions/genre';
+import ModalAddBook from '../components/ModalAddBook';
 
 const Home = (props) => {
     const [megaState, setMegaState] = useState({
@@ -40,23 +39,16 @@ const Home = (props) => {
     };
     const prevValue = usePreviousValue(megaState);
     const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
+    const role = atob(localStorage.getItem('role'));
 
     useEffect(() => {
         if (!mounted.current) {
             props.getBookAction();
             props.getBookByFilterAction(token, prevValue);
-            
-            if (role === 1) {
-                props.getGenreAction(token);
-                props.getAuthorAction(token);
-            }
 
             mounted.current = true;
         } else {
             if (prevValue !== megaState) {
-                console.log('prev @', prevValue);
-                console.log('mega @', megaState);
                 props.getBookByFilterAction(token, megaState);
                 const { page, limit, by, sort, search } = megaState;
                 let query = '?';
@@ -144,8 +136,6 @@ const Home = (props) => {
 
     const { responseBook, responseBookByFilter, pagination } = props.book;
 
-    console.log(responseBookByFilter);
-
     return (
         <Fragment>
             <NavbarLayout
@@ -159,6 +149,7 @@ const Home = (props) => {
             <CarouselLayout
                 responseBook={responseBook}
                 isLoading={props.book.isLoading}
+                history={props.history}
             />
             <Container>
                 <Row>
@@ -197,9 +188,9 @@ const Home = (props) => {
                             </Form.Control>
                         </Form.Group>
                     </Col>
-                    {/* <Col xl={{ offset: 5 }}>
-                        {role === 1 ? <ModalAdd getBooks={this.getBooks} /> : <></>}
-                    </Col> */}
+                    <Col xl={{ offset: 5 }}>
+                        {role === '2' && <ModalAddBook />}
+                    </Col>
                 </Row>
             </Container>
             <Container>
@@ -217,7 +208,7 @@ const Home = (props) => {
                                 xs={6}
                                 key={key}
                                 style={{ textAlign: 'center', cursor: 'pointer' }}
-                                // onClick={() => this.getById(data.id, `books`)}
+                                onClick={() => props.history.push(`/description/${data.id}`)}
                             >
                                 <Image
                                     src={`${process.env.REACT_APP_API_URL}/images/${data.image}`}
@@ -252,8 +243,6 @@ const Home = (props) => {
 const mapStateToProps = ({ book, author, genre }) => {
     return {
         book,
-        author,
-        genre,
     };
 };
 
@@ -267,12 +256,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         logoutAction: () => {
             dispatch(logoutActionCreator());
-        },
-        getAuthorAction: (token) => {
-            dispatch(getAuthorActionCreator(token));
-        },
-        getGenreAction: (token) => {
-            dispatch(getGenreActionCreator(token));
         },
     };
 };

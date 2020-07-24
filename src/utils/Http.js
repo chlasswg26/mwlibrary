@@ -28,6 +28,13 @@ export const tokenUser = (body, token) => {
 export const getBook = () => {
   return Axios.get(`${BOOK_ENDPOINT}`);
 };
+export const getBookById = (id, token) => {
+  return Axios.get(`${BOOK_ENDPOINT}/${id}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+};
 export const getBookByUserId = (id, token) => {
   return Axios.get(`${BOOK_ENDPOINT}/user/${id}`, {
     headers: {
