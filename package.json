@@ -9,7 +9,6 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
-    "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "querystring": "^0.2.0",
     "react": "^16.13.1",
@@ -24,7 +23,6 @@
     "reactstrap": "^8.5.1",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
-    "redux-persist": "^6.0.0",
     "redux-promise-middleware": "^6.1.2",
     "yup": "^0.29.1"
   },
