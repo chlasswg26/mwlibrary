@@ -3,7 +3,7 @@
 </p>
 <p align="center">
   The most wanted library apps.<br/>
-  This project was bootstrapped with <a title="Create React App" href="https://github.com/facebook/create-react-app"></a> .<br/>
+  This project was bootstrapped with <a title="Create React App" href="https://github.com/facebook/create-react-app">CRA</a> .<br/>
 </p>
 
 
