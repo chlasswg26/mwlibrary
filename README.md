@@ -92,6 +92,11 @@ REACT_APP_API_URL=
 <img src="./screenshot/Screenshot (13).png" width="200">
 </kbd>
 
+### Related Projects
+This project is related to several platforms
+
+* Backend [https://github.com/chlasswg26/libraryapp-api](https://github.com/chlasswg26/libraryapp-api)
+
 ## Available Scripts
 
 In the project directory, you can run:
